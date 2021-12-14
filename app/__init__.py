@@ -7,6 +7,10 @@ from flask import Flask, jsonify,request
 from flask_cors import CORS
 from json import dumps
 from flask import Flask, make_response
+
+
+
+
 app = Flask(__name__)
 #app.config['MYSQL_HOST']='remotemysql.com'
 #app.config['MYSQL_USER']='GqD8cGeo5O'
@@ -33,10 +37,11 @@ def  postInput():
         process_data.append(int(inserValues[i]))
         print(inserValues[i])
     pickle_in = open('randomforest.pickle','rb')
-
+    arr=np.array(process_data)
+    print(arr)
+    arr=arr.reshape(1,16)
     forest = pickle.load(pickle_in)
-
-    predict_result = forest.predict([process_data])
+    predict_result = forest.predict(arr)
     
     return(str(predict_result[0]))
 #    return make_response(dumps(inserValues))
