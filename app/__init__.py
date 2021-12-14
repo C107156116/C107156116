@@ -8,6 +8,10 @@ from flask_cors import CORS
 from json import dumps
 from flask import Flask, make_response
 from sklearn import preprocessing
+
+
+
+
 app = Flask(__name__)
 #app.config['MYSQL_HOST']='remotemysql.com'
 #app.config['MYSQL_USER']='GqD8cGeo5O'
@@ -34,8 +38,11 @@ def  postInput():
         process_data.append(int(inserValues[i]))
         print(inserValues[i])
     pickle_in = open('randomforest.pickle','rb')
+
     forest = pickle.load(pickle_in)
-    predict_result = forest.predict(temp)
+
+    predict_result = forest.predict([process_data])
+    
     return(str(predict_result[0]))
 #    return make_response(dumps(inserValues))
 
