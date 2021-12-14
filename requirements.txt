@@ -6,4 +6,5 @@ scikit-learn==0.22.0
 pandas
 openpyxl
 plotly
-flask_mysqldb 
+flask_mysqldb
+xlrd
