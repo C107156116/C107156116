@@ -7,11 +7,6 @@ from flask import Flask, jsonify,request
 from flask_cors import CORS
 from json import dumps
 from flask import Flask, make_response
-from sklearn import preprocessing
-
-
-
-
 app = Flask(__name__)
 #app.config['MYSQL_HOST']='remotemysql.com'
 #app.config['MYSQL_USER']='GqD8cGeo5O'
