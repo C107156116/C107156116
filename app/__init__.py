@@ -4,19 +4,22 @@ import pandas as pd
 import json
 import heapq
 from flask import Flask, jsonify,request
+from flask_mysqldb import MySQL
 from flask_cors import CORS
 from json import dumps
 from flask import Flask, make_response
+from flask import Response
 
-
-
-
+import sklearn
+print(sklearn.__version__)
 app = Flask(__name__)
-#app.config['MYSQL_HOST']='remotemysql.com'
-#app.config['MYSQL_USER']='GqD8cGeo5O'
-#app.config['MYSQL_PASSWORD']='BKeOFOJ8xs'
-#app.config['MYSQL_DB']='GqD8cGeo5O'
-#mysql=MySQL(app)
+app.config['MYSQL_HOST']='sql5.freemysqlhosting.net'
+app.config['MYSQL_USER']='sql5459085'
+app.config['MYSQL_PASSWORD']='Lvxv5AKy8b'
+app.config['MYSQL_DB']='sql5459085'
+app.config['JSON_AS_ASCII'] = False
+
+mysql=MySQL(app)
 df=pd.read_excel('青春露_data_text_process_test.xls')
 all_cols=['好吸收','明亮. 透亮','保濕','不引起過敏','會回購','不油膩','溫和低刺激','不致痘','不黏膩','修護','春','夏','秋','冬']
 cols=['skin_types','age']
@@ -45,6 +48,23 @@ def  postInput():
     
     return(str(predict_result[0]))
 #    return make_response(dumps(inserValues))
-
+@app.route('/getdata_product1')
+def  getdata():
+     tmp=[]
+     table=[]
+     mycursor = mysql.connection.cursor()
+     mycursor.execute("SELECT * FROM PRODUCT_1")
+     data = mycursor.fetchall()
+     for i in range(0,len(data),1):
+         for x in range(0,len(data[i]),1):
+             tmp.append(data[i][x])
+         table.append(tmp)
+         tmp=[]
+     field_names = [i[0] for i in mycursor.description]
+     data=pd.DataFrame(table,columns=field_names)
+     return_data=data.to_dict('records')
+     json_string = json.dumps(return_data,ensure_ascii = False)
+     response = Response(json_string,content_type="application/json; charset=utf-8" )
+     return response
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
