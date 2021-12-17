@@ -66,5 +66,10 @@ def  getdata():
      json_string = json.dumps(return_data,ensure_ascii = False)
      response = Response(json_string,content_type="application/json; charset=utf-8" )
      return response
+@app.route('/getcol_product1')
+def  getcol_product1():
+     json_string = json.dumps(all_cols,ensure_ascii = False)
+     response = Response(json_string,content_type="application/json; charset=utf-8" )
+     return response
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
