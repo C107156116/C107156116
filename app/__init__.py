@@ -76,25 +76,17 @@ def  searchproduct():
      tmp=[]
      table=[]
      inserValues=request.get_json()
-     try:
-         brand=inserValues['brand']
-     except Exception as e:
-         brand="None"
-         print(e)
+     brand=inserValues['brand']
+     classfication=inserValues['classfication']
 
-     try:
-         classfication=inserValues['classfication']
-     except Exception as e:
-         classfication="None"
-         print(e)
-     
+
      mycursor = mysql.connection.cursor()
      print(brand)
-     if brand=="None" and classfication!="None":
+     if brand=="" and classfication!="":
          mycursor.execute("SELECT * FROM product_information WHERE product_classification=%s",([classfication]))
-     elif classfication=="None" and brand!="None":
+     elif classfication=="" and brand!="":
          mycursor.execute("SELECT * FROM product_information WHERE product_brand=%s",([brand]))
-     elif brand=="None" and classfication=="None":
+     elif brand=="" and classfication=="":
          mycursor.execute("SELECT * FROM product_information")
      else:
          mycursor.execute("SELECT * FROM product_information WHERE product_classification=%s AND product_brand=%s",(classfication,brand))
