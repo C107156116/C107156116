@@ -79,29 +79,26 @@ def  searchproduct():
      try:
          brand=inserValues['brand']
      except Exception as e:
-        brand="None"
-        print(e)
+         brand="None"
+         print(e)
 
      try:
-        classfication=inserValues['classfication']
+         classfication=inserValues['classfication']
      except Exception as e:
-        classfication="None"
-        print(e)
+         classfication="None"
+         print(e)
      
      mycursor = mysql.connection.cursor()
      print(brand)
-     if brand=="None":
+     if brand=="None" and classfication!="None":
          mycursor.execute("SELECT * FROM product_information WHERE product_classification=%s",([classfication]))
-     elif classfication=="None":
-         print(brand)
+     elif classfication=="None" and brand!="None":
          mycursor.execute("SELECT * FROM product_information WHERE product_brand=%s",([brand]))
-     if brand=="None" and classfication=="None":
+     elif brand=="None" and classfication=="None":
          mycursor.execute("SELECT * FROM product_information")
      else:
          mycursor.execute("SELECT * FROM product_information WHERE product_classification=%s AND product_brand=%s",(classfication,brand))
      data = mycursor.fetchall()
-     
-     
      for i in range(0,len(data),1):
          for x in range(0,len(data[i]),1):
              tmp.append(data[i][x])
