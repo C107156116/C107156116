@@ -71,5 +71,52 @@ def  getcol_product1():
      json_string = json.dumps(all_cols,ensure_ascii = False)
      response = Response(json_string,content_type="application/json; charset=utf-8" )
      return response
+@app.route('/search_product',methods=['POST'])
+def  searchproduct():
+     tmp=[]
+     table=[]
+     inserValues=request.get_json()
+     try:
+         brand=inserValues['brand']
+     except Exception as e:
+        brand="None"
+        print(e)
+
+     try:
+        classfication=inserValues['classfication']
+     except Exception as e:
+        classfication="None"
+        print(e)
+     
+     mycursor = mysql.connection.cursor()
+     print(brand)
+     if brand=="None":
+         mycursor.execute("SELECT * FROM product_information WHERE product_classification=%s",([classfication]))
+     elif classfication=="None":
+         print(brand)
+         mycursor.execute("SELECT * FROM product_information WHERE product_brand=%s",([brand]))
+     if brand=="None" and classfication=="None":
+         mycursor.execute("SELECT * FROM product_information")
+     else:
+         mycursor.execute("SELECT * FROM product_information WHERE product_classification=%s AND product_brand=%s",(classfication,brand))
+     data = mycursor.fetchall()
+     
+     
+     for i in range(0,len(data),1):
+         for x in range(0,len(data[i]),1):
+             tmp.append(data[i][x])
+         table.append(tmp)
+         tmp=[]
+     field_names = [i[0] for i in mycursor.description]
+     data=pd.DataFrame(table,columns=field_names)
+     return_data=data.to_dict('records')
+     json_string = json.dumps(return_data,ensure_ascii = False)
+
+     if len(data)==0:
+         response = "查無資料"
+     else:
+         response = Response(json_string,content_type="application/json; charset=utf-8" )
+         
+     return response
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
