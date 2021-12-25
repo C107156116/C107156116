@@ -248,6 +248,43 @@ def  predict_product6():
     forest = pickle.load(pickle_in)
     predict_result = forest.predict(arr)
     return(str(predict_result[0]))
+@app.route('/getdata',methods=['POST'])
+def  getproductdata():
+    inserValues=request.get_json()
+    productnum=int(inserValues['product_num'])
+    print(productnum)
+    tmp=[]
+    table=[]
+    mycursor = mysql.connection.cursor()
+    if(productnum==1):
+        mycursor.execute("SELECT * FROM product_YAMASHIN");
+        print('獲取資料成功')
+    elif(productnum==2):
+        mycursor.execute("SELECT * FROM product_SUPERLIGHT");
+        print('獲取資料成功')
+    elif(productnum==3):
+        mycursor.execute("SELECT * FROM product_skii_youngwater");
+        print('獲取資料成功')
+    elif(productnum==4):
+        mycursor.execute("SELECT * FROM product_skii_RNA");
+    elif(productnum==5):
+        mycursor.execute("SELECT * FROM product_skii_RNA_light");
+    elif(productnum==6):
+        mycursor.execute("SELECT * FROM product_HOMEBEATY");
+    elif(productnum==7):
+        mycursor.execute("SELECT * FROM product_MINI");
+    data = mycursor.fetchall()
+    for i in range(0,len(data),1):
+        for x in range(0,len(data[i]),1):
+            tmp.append(data[i][x])
+        table.append(tmp)
+        tmp=[]
+    field_names = [i[0] for i in mycursor.description]
+    data=pd.DataFrame(table,columns=field_names)
+    return_data=data.to_dict('records')
+    json_string = json.dumps(return_data,ensure_ascii = False)
+    response = Response(json_string,content_type="application/json; charset=utf-8" )
+    return response
 #----------------------------------------------  
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=False)
