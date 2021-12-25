@@ -13,10 +13,10 @@ from flask import Response
 import sklearn
 print(sklearn.__version__)
 app = Flask(__name__)
-app.config['MYSQL_HOST']='sql5.freemysqlhosting.net'
-app.config['MYSQL_USER']='sql5459085'
-app.config['MYSQL_PASSWORD']='Lvxv5AKy8b'
-app.config['MYSQL_DB']='sql5459085'
+app.config['MYSQL_HOST']='remotemysql.com'
+app.config['MYSQL_USER']='GqD8cGeo5O'
+app.config['MYSQL_PASSWORD']='We4Vb60cQA'
+app.config['MYSQL_DB']='GqD8cGeo5O'
 app.config['JSON_AS_ASCII'] = False
 
 mysql=MySQL(app)
@@ -83,13 +83,13 @@ def  searchproduct():
      mycursor = mysql.connection.cursor()
      print(brand)
      if brand=="" and classfication!="":
-         mycursor.execute("SELECT * FROM product_information WHERE product_classification=%s",([classfication]))
+         mycursor.execute("SELECT * FROM product_list WHERE product_classification=%s",([classfication]))
      elif classfication=="" and brand!="":
-         mycursor.execute("SELECT * FROM product_information WHERE product_brand=%s",([brand]))
+         mycursor.execute("SELECT * FROM product_list WHERE product_brand=%s",([brand]))
      elif brand=="" and classfication=="":
-         mycursor.execute("SELECT * FROM product_information")
+         mycursor.execute("SELECT * FROM product_list")
      else:
-         mycursor.execute("SELECT * FROM product_information WHERE product_classification=%s AND product_brand=%s",(classfication,brand))
+         mycursor.execute("SELECT * FROM product_list WHERE product_classification=%s AND product_brand=%s",(classfication,brand))
      data = mycursor.fetchall()
      for i in range(0,len(data),1):
          for x in range(0,len(data[i]),1):
