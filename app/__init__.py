@@ -39,7 +39,7 @@ def  postInput():
     for i in all_cols:
         process_data.append(int(inserValues[i]))
         print(inserValues[i])
-    pickle_in = open('product_predict_model/青春露.pickle','rb')
+    pickle_in = open('app/product_predict_model/青春露.pickle','rb')
     arr=np.array(process_data)
     print(arr)
     arr=arr.reshape(1,15)
