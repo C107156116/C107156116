@@ -53,7 +53,7 @@ def  getdata():
      tmp=[]
      table=[]
      mycursor = mysql.connection.cursor()
-     mycursor.execute("SELECT * FROM PRODUCT_1")
+     mycursor.execute("SELECT * FROM product_skii_youngwater")
      data = mycursor.fetchall()
      for i in range(0,len(data),1):
          for x in range(0,len(data[i]),1):
