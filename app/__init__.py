@@ -20,7 +20,7 @@ app.config['MYSQL_DB']='GqD8cGeo5O'
 app.config['JSON_AS_ASCII'] = False
 
 mysql=MySQL(app)
-df=pd.read_excel('青春露_data_text_process_test.xls')
+df=pd.read_excel('青春露_data_text_process_test_smote.xls')
 all_cols=['absorption','bright','Moisturizing','dont_allergies','not_greasy','low_irritation','no_acne','not_sticky','repair','spring','summer','autumn','winter']
 cols=['skin_types','age']
 CORS(app)
