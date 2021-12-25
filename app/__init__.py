@@ -154,7 +154,7 @@ def  predict_product2():
     productname='激光極淨白淡斑精華'
     df=pd.read_excel('app/smote/'+productname+'_data_text_process_test_smote.xls')
     dic={'混合性肌膚':0,'敏感性肌膚':1,'乾性肌膚':2,'油性肌膚':3,'普通性肌膚':4,'先天過敏性肌膚':5}
-    all_cols=['明亮. 透亮','好吸收','保濕','改善暗沉','溫和低刺激','好推勻','用量省','不黏膩','淡化斑點','春','夏','秋','冬']
+    all_cols=['透亮','好吸收','保濕','改善暗沉','溫和低刺激','好推勻','用量省','不黏膩','淡化斑點','春','夏','秋','冬']
     								
 
     inserValues['skin_types']=dic[inserValues['skin_types']]
