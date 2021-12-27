@@ -125,10 +125,34 @@ def  getcol_product1():
 @app.route('/predict_product1',methods=['POST'])
 def  predict_product1():
     inserValues=request.get_json()
+    effect_cols=['深層清潔','改善粉刺','清潔力好','緊緻毛孔','易沖淨','不引起過敏','溫和低刺激','清爽','控油']
+    effect_list=[]
+    product_effects=(inserValues['product_effects'])
+    effect_df=pd.DataFrame(product_effects)
+    for i in range(len(effect_df)):
+        for effect_col in effect_cols:
+            try:
+                effect_df[effect_col][i]=int(effect_df[effect_col][i])
+                effect_list.append(effect_df[effect_col][i])
+                print(effect_df[effect_col][i])
+            except:
+                pass
+    season_cols=['春','夏','秋','冬']
+    season_list=[]
+    product_seasons=(inserValues['product_seasons'])
+    season_df=pd.DataFrame(product_seasons)
+    for i in range(len(season_df)):
+        for season_col in season_cols:
+            try:
+                season_df[season_col][i]=int(season_df[season_col][i])
+                season_list.append(season_df[season_col][i])
+                print(season_df[season_col][i])
+            except:
+                pass
     productname='亞馬遜白泥淨緻毛孔面膜'
     df=pd.read_excel('app/smote/'+productname+'_data_text_process_test_smote.xls')
     dic={'混合性肌膚':0,'敏感性肌膚':1,'乾性肌膚':2,'油性肌膚':3,'普通性肌膚':4,'先天過敏性肌膚':5}
-    all_cols=['深層清潔','改善粉刺','清潔力好','緊緻毛孔','易沖淨','不引起過敏','溫和低刺激','清爽','控油','春','夏','秋','冬']
+#    all_cols=['深層清潔','改善粉刺','清潔力好','緊緻毛孔','易沖淨','不引起過敏','溫和低刺激','清爽','控油','春','夏','秋','冬']
     inserValues['skin_types']=dic[inserValues['skin_types']]
     process_data=[]
     for y in range(0,len(cols),1):   
@@ -136,16 +160,14 @@ def  predict_product1():
         min_num=min(df[cols[y]])
         pro_num=round(((float(inserValues[cols[y]])-min_num)/(max_num-min_num)),16)
         process_data.append(pro_num)
-    for i in all_cols:
-        process_data.append(int(inserValues[i]))
-        print(inserValues[i])
+    process_data=process_data+effect_list+season_list
+    print(process_data)
     pickle_in = open('app/product_predict_model/'+productname+'.pickle','rb')
     arr=np.array(process_data)
     print(arr)
     arr=arr.reshape(1,15)
     forest = pickle.load(pickle_in)
     predict_result = forest.predict(arr)
-    
     return(str(predict_result[0]))
 #----------------------------------------------    
 @app.route('/predict_product2',methods=['POST'])
