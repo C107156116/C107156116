@@ -77,7 +77,6 @@ def  searchproduct():
      data=pd.DataFrame(table,columns=field_names)
      return_data=data.to_dict('records')
      json_string = json.dumps(return_data,ensure_ascii = False)
-
      if len(data)==0:
          response = "查無資料"
      else:
@@ -128,6 +127,7 @@ def predict_method(effect_cols,productname,inserValues):
         min_num=min(df[cols[y]])
         pro_num=round(((float(inserValues[cols[y]])-min_num)/(max_num-min_num)),16)
         process_data.append(pro_num)
+    print(effect_list)
     process_data=process_data+effect_list+season_list
     print(len(process_data))
     pickle_in = open('app/product_predict_model/'+productname+'.pickle','rb')
