@@ -158,6 +158,7 @@ def  predict_product2():
     effect_cols=['透亮','好吸收','保濕','改善暗沉','溫和低刺激','好推勻','用量省','不黏膩','淡化斑點']
     predict_result=predict_method(effect_cols,productname,inserValues)
     return(str(predict_result[0]))
+
 @app.route('/predict_product3',methods=['POST'])
 def  predict_product3():
     inserValues=request.get_json()
@@ -168,19 +169,26 @@ def  predict_product3():
 @app.route('/predict_product4',methods=['POST'])
 def  predict_product4():
     inserValues=request.get_json()
-    productname='R.N.A.超肌能緊緻活膚霜(輕盈版)'
-    effect_cols=['保濕','清爽','不黏膩','好推勻','好吸收','延展度佳','修護','不厚重','彈力','輕盈']		
+    productname='R.N.A.超肌能緊緻活膚霜'   
+    effect_cols=['保濕','滋潤','彈力','緊實','好推勻','光滑','延展度佳','明亮','好吸收','不引起過敏']
     predict_result=predict_method(effect_cols,productname,inserValues)
     return(str(predict_result[0]))
 @app.route('/predict_product5',methods=['POST'])
 def  predict_product5():
     inserValues=request.get_json()
-    productname='嘉美艷容露'
-    effect_cols=['價格實在','清爽','收斂','舒緩','不致痘','鎮定','不黏膩','不油膩','控油']		
+    productname='R.N.A.超肌能緊緻活膚霜(輕盈版)'
+    effect_cols=['保濕','清爽','不黏膩','好推勻','好吸收','延展度佳','修護','不厚重','彈力','輕盈']		
     predict_result=predict_method(effect_cols,productname,inserValues)
     return(str(predict_result[0]))
 @app.route('/predict_product6',methods=['POST'])
 def  predict_product6():
+    inserValues=request.get_json()
+    productname='嘉美艷容露'
+    effect_cols=['價格實在','清爽','收斂','舒緩','不致痘','鎮定','不黏膩','不油膩','控油']		
+    predict_result=predict_method(effect_cols,productname,inserValues)
+    return(str(predict_result[0]))
+@app.route('/predict_product7',methods=['POST'])
+def  predict_product7():
     inserValues=request.get_json()
     productname='深層卸粧乳'
     effect_cols=['價格實在','溫和低刺激','易沖淨','清爽','清潔力好','不油膩','不致痘','不緊繃','不引起過敏']		
