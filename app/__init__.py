@@ -169,8 +169,8 @@ def  predict_product3():
 @app.route('/predict_product4',methods=['POST'])
 def  predict_product4():
     inserValues=request.get_json()
-    productname='R.N.A.超肌能緊緻活膚霜'   
-    effect_cols=['保濕','滋潤','彈力','緊實','好推勻','光滑','延展度佳','明亮','好吸收','不引起過敏']
+    productname='R.N.A.超肌能緊緻活膚霜'
+    effect_cols=['保濕','好推勻','不黏膩','好吸收','彈力','滋潤','修護','緊實','改善細紋','不油膩']
     predict_result=predict_method(effect_cols,productname,inserValues)
     return(str(predict_result[0]))
 @app.route('/predict_product5',methods=['POST'])
