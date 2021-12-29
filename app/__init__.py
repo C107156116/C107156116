@@ -227,6 +227,7 @@ def  getproductdata():
         tmp=[]
     field_names = [i[0] for i in mycursor.description]
     data=pd.DataFrame(table,columns=field_names)
+    data=data.head(50)
     return_data=data.to_dict('records')
     json_string = json.dumps(return_data,ensure_ascii = False)
     response = Response(json_string,content_type="application/json; charset=utf-8" )
